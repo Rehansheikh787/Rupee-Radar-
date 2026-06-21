@@ -2,7 +2,7 @@ import React from 'react';
 import TransactionTable from '../components/TransactionTable/TransactionTable.jsx';
 import CategoryPieChart from '../components/Charts/CategoryPieChart.jsx';
 
-function DashboardPage({ data, theme, onReset, onNavigateToReport }) {
+function DashboardPage({ data, theme, onReset, onNavigateToReport, onUpdateCategory }) {
   if (!data) return null;
 
   const { summary, categoryBreakdown, topTransactions, recurringPayments, insights, transactions } = data;
@@ -179,7 +179,7 @@ function DashboardPage({ data, theme, onReset, onNavigateToReport }) {
           <div className="transactions-column">
             <div className="glass-panel transactions-card">
               <h3>Transactions List</h3>
-              <TransactionTable transactions={transactions} />
+              <TransactionTable transactions={transactions} onUpdateCategory={onUpdateCategory} />
             </div>
           </div>
         </div>

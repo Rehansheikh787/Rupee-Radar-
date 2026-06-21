@@ -115,7 +115,7 @@ export function detectRecurringPayments(transactions) {
 
       // Attempt to identify the category from the transactions
       // Take the most common category or the first one
-      const category = txList[0].category || 'Other';
+      const category = txList[0].category || 'Uncategorized';
 
       recurringPayments.push({
         description: txList[0].description, // original description for reference

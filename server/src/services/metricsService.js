@@ -29,7 +29,7 @@ export function calculateFinancialMetrics(transactions) {
   transactions.forEach(tx => {
     const amount = tx.amount || 0;
     const type = tx.type;
-    const category = tx.category || 'Other';
+    const category = tx.category || 'Uncategorized';
     const txDate = new Date(tx.date);
 
     // Track min/max dates

@@ -14,34 +14,41 @@ function CategoryPieChart({ categoryBreakdown, theme }) {
 
   // Map category names to their respective design system colors based on theme
   const categoryColors = isLight ? {
-    food: '#E5A8A9',
-    travel: '#98D8C8',
-    shopping: '#E8D490',
-    bills: '#A5CAD8',
-    emi: '#D8AC95',
-    subscriptions: '#C5B4E3',
-    salary: '#76A08A',
-    rent: '#E5A198',
-    investments: '#9EC5E8',
-    other: '#C4C5C0'
+    'groceries': '#98D8C8',
+    'food-dining': '#E5A8A9',
+    'transportation': '#A5CAD8',
+    'utilities-bills': '#76A08A',
+    'shopping': '#E8D490',
+    'entertainment-leisure': '#C5B4E3',
+    'housing-rent': '#E5A198',
+    'health-medical': '#C87A61',
+    'transfer-credit-card-payment': '#8A98A5',
+    'salary': '#5C8A75',
+    'investments': '#9EC5E8',
+    'emi': '#D8AC95',
+    'uncategorized': '#C4C5C0'
   } : {
-    food: '#FF5E7E',
-    travel: '#00F5D4',
-    shopping: '#FEE440',
-    bills: '#80FFDB',
-    emi: '#FF9F1C',
-    subscriptions: '#9D4EDD',
-    salary: '#2EC4B6',
-    rent: '#FF5400',
-    investments: '#0077B6',
-    other: '#6C757D'
+    'groceries': '#00F5D4',
+    'food-dining': '#FF5E7E',
+    'transportation': '#80FFDB',
+    'utilities-bills': '#00E676',
+    'shopping': '#FEE440',
+    'entertainment-leisure': '#9D4EDD',
+    'housing-rent': '#FF5400',
+    'health-medical': '#FF1744',
+    'transfer-credit-card-payment': '#8257E6',
+    'salary': '#2EC4B6',
+    'investments': '#0077B6',
+    'emi': '#FF9F1C',
+    'uncategorized': '#6C757D'
   };
 
   const labels = categoryBreakdown.map(c => c.category);
   const dataValues = categoryBreakdown.map(c => c.totalAmount);
-  const backgroundColors = categoryBreakdown.map(c => 
-    categoryColors[c.category.toLowerCase()] || categoryColors.other
-  );
+  const backgroundColors = categoryBreakdown.map(c => {
+    const key = c.category.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+    return categoryColors[key] || categoryColors.uncategorized;
+  });
 
   // Calculate total spend inside the chart for the center overlay readout
   const totalSpend = categoryBreakdown.reduce((sum, c) => sum + c.totalAmount, 0);

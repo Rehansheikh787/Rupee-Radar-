@@ -23,16 +23,19 @@
   --color-primary-text: #FFFFFF;
 
   /* Category colors - Vibrant Glowing Pastels/Neons */
-  --cat-food: #FF5E7E;
-  --cat-travel: #00F5D4;
+  --cat-groceries: #00F5D4;
+  --cat-food-dining: #FF5E7E;
+  --cat-transportation: #80FFDB;
+  --cat-utilities-bills: #00E676;
   --cat-shopping: #FEE440;
-  --cat-bills: #80FFDB;
-  --cat-emi: #FF9F1C;
-  --cat-subscriptions: #9D4EDD;
+  --cat-entertainment-leisure: #9D4EDD;
+  --cat-housing-rent: #FF5400;
+  --cat-health-medical: #FF1744;
+  --cat-transfer-credit-card-payment: #8257E6;
   --cat-salary: #2EC4B6;
-  --cat-rent: #FF5400;
   --cat-investments: #0077B6;
-  --cat-other: #6C757D;
+  --cat-emi: #FF9F1C;
+  --cat-uncategorized: #6C757D;
 
   /* Fonts */
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
@@ -103,16 +106,19 @@
   --color-primary-text: #FAF9F5;
 
   /* Category colors - Soft Pastels */
-  --cat-food: #E5A8A9;
-  --cat-travel: #98D8C8;
+  --cat-groceries: #98D8C8;
+  --cat-food-dining: #E5A8A9;
+  --cat-transportation: #A5CAD8;
+  --cat-utilities-bills: #76A08A;
   --cat-shopping: #E8D490;
-  --cat-bills: #A5CAD8;
-  --cat-emi: #D8AC95;
-  --cat-subscriptions: #C5B4E3;
-  --cat-salary: #76A08A;
-  --cat-rent: #E5A198;
+  --cat-entertainment-leisure: #C5B4E3;
+  --cat-housing-rent: #E5A198;
+  --cat-health-medical: #C87A61;
+  --cat-transfer-credit-card-payment: #8A98A5;
+  --cat-salary: #5C8A75;
   --cat-investments: #9EC5E8;
-  --cat-other: #C4C5C0;
+  --cat-emi: #D8AC95;
+  --cat-uncategorized: #C4C5C0;
 
   /* Shadows & Glass overrides */
   --shadow-sm: 0 2px 8px rgba(58, 80, 72, 0.04);
@@ -232,16 +238,19 @@ button {
   border-radius: var(--radius-full);
   margin-right: var(--spacing-sm);
 }
-.cat-food { background-color: var(--cat-food); }
-.cat-travel { background-color: var(--cat-travel); }
+.cat-groceries { background-color: var(--cat-groceries); }
+.cat-food-dining { background-color: var(--cat-food-dining); }
+.cat-transportation { background-color: var(--cat-transportation); }
+.cat-utilities-bills { background-color: var(--cat-utilities-bills); }
 .cat-shopping { background-color: var(--cat-shopping); }
-.cat-bills { background-color: var(--cat-bills); }
-.cat-emi { background-color: var(--cat-emi); }
-.cat-subscriptions { background-color: var(--cat-subscriptions); }
+.cat-entertainment-leisure { background-color: var(--cat-entertainment-leisure); }
+.cat-housing-rent { background-color: var(--cat-housing-rent); }
+.cat-health-medical { background-color: var(--cat-health-medical); }
+.cat-transfer-credit-card-payment { background-color: var(--cat-transfer-credit-card-payment); }
 .cat-salary { background-color: var(--cat-salary); }
-.cat-rent { background-color: var(--cat-rent); }
 .cat-investments { background-color: var(--cat-investments); }
-.cat-other { background-color: var(--cat-other); }
+.cat-emi { background-color: var(--cat-emi); }
+.cat-uncategorized { background-color: var(--cat-uncategorized); }
 
 /* Category Tags */
 .category-tag {
@@ -252,16 +261,19 @@ button {
   font-weight: 500;
   text-transform: capitalize;
 }
-.tag-food { background: color-mix(in srgb, var(--cat-food) 15%, transparent); color: var(--cat-food); border: 1px solid color-mix(in srgb, var(--cat-food) 30%, transparent); }
-.tag-travel { background: color-mix(in srgb, var(--cat-travel) 15%, transparent); color: var(--cat-travel); border: 1px solid color-mix(in srgb, var(--cat-travel) 30%, transparent); }
+.tag-groceries { background: color-mix(in srgb, var(--cat-groceries) 15%, transparent); color: var(--cat-groceries); border: 1px solid color-mix(in srgb, var(--cat-groceries) 30%, transparent); }
+.tag-food-dining { background: color-mix(in srgb, var(--cat-food-dining) 15%, transparent); color: var(--cat-food-dining); border: 1px solid color-mix(in srgb, var(--cat-food-dining) 30%, transparent); }
+.tag-transportation { background: color-mix(in srgb, var(--cat-transportation) 15%, transparent); color: var(--cat-transportation); border: 1px solid color-mix(in srgb, var(--cat-transportation) 30%, transparent); }
+.tag-utilities-bills { background: color-mix(in srgb, var(--cat-utilities-bills) 15%, transparent); color: var(--cat-utilities-bills); border: 1px solid color-mix(in srgb, var(--cat-utilities-bills) 30%, transparent); }
 .tag-shopping { background: color-mix(in srgb, var(--cat-shopping) 15%, transparent); color: var(--cat-shopping); border: 1px solid color-mix(in srgb, var(--cat-shopping) 30%, transparent); }
-.tag-bills { background: color-mix(in srgb, var(--cat-bills) 15%, transparent); color: var(--cat-bills); border: 1px solid color-mix(in srgb, var(--cat-bills) 30%, transparent); }
-.tag-emi { background: color-mix(in srgb, var(--cat-emi) 15%, transparent); color: var(--cat-emi); border: 1px solid color-mix(in srgb, var(--cat-emi) 30%, transparent); }
-.tag-subscriptions { background: color-mix(in srgb, var(--cat-subscriptions) 15%, transparent); color: var(--cat-subscriptions); border: 1px solid color-mix(in srgb, var(--cat-subscriptions) 30%, transparent); }
+.tag-entertainment-leisure { background: color-mix(in srgb, var(--cat-entertainment-leisure) 15%, transparent); color: var(--cat-entertainment-leisure); border: 1px solid color-mix(in srgb, var(--cat-entertainment-leisure) 30%, transparent); }
+.tag-housing-rent { background: color-mix(in srgb, var(--cat-housing-rent) 15%, transparent); color: var(--cat-housing-rent); border: 1px solid color-mix(in srgb, var(--cat-housing-rent) 30%, transparent); }
+.tag-health-medical { background: color-mix(in srgb, var(--cat-health-medical) 15%, transparent); color: var(--cat-health-medical); border: 1px solid color-mix(in srgb, var(--cat-health-medical) 30%, transparent); }
+.tag-transfer-credit-card-payment { background: color-mix(in srgb, var(--cat-transfer-credit-card-payment) 15%, transparent); color: var(--cat-transfer-credit-card-payment); border: 1px solid color-mix(in srgb, var(--cat-transfer-credit-card-payment) 30%, transparent); }
 .tag-salary { background: color-mix(in srgb, var(--cat-salary) 15%, transparent); color: var(--cat-salary); border: 1px solid color-mix(in srgb, var(--cat-salary) 30%, transparent); }
-.tag-rent { background: color-mix(in srgb, var(--cat-rent) 15%, transparent); color: var(--cat-rent); border: 1px solid color-mix(in srgb, var(--cat-rent) 30%, transparent); }
 .tag-investments { background: color-mix(in srgb, var(--cat-investments) 15%, transparent); color: var(--cat-investments); border: 1px solid color-mix(in srgb, var(--cat-investments) 30%, transparent); }
-.tag-other { background: color-mix(in srgb, var(--cat-other) 15%, transparent); color: var(--cat-other); border: 1px solid color-mix(in srgb, var(--cat-other) 30%, transparent); }
+.tag-emi { background: color-mix(in srgb, var(--cat-emi) 15%, transparent); color: var(--cat-emi); border: 1px solid color-mix(in srgb, var(--cat-emi) 30%, transparent); }
+.tag-uncategorized { background: color-mix(in srgb, var(--cat-uncategorized) 15%, transparent); color: var(--cat-uncategorized); border: 1px solid color-mix(in srgb, var(--cat-uncategorized) 30%, transparent); }
 
 /* Common Buttons */
 .btn-primary {

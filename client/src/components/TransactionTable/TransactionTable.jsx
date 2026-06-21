@@ -1,7 +1,28 @@
 import React, { useState, useMemo } from 'react';
 import './TransactionTable.css';
 
-function TransactionTable({ transactions }) {
+const ALLOWED_CATEGORIES = [
+  'Groceries',
+  'Food & Dining',
+  'Transportation',
+  'Utilities & Bills',
+  'Shopping',
+  'Entertainment & Leisure',
+  'Housing & Rent',
+  'Health & Medical',
+  'Transfer / Credit Card Payment',
+  'Salary',
+  'Investments',
+  'EMI',
+  'Uncategorized'
+];
+
+const getCategoryClass = (categoryName) => {
+  if (!categoryName) return 'uncategorized';
+  return categoryName.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+};
+
+function TransactionTable({ transactions, onUpdateCategory }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortField, setSortField] = useState('date'); // 'date' | 'amount'
@@ -145,9 +166,23 @@ function TransactionTable({ transactions }) {
                     </div>
                   </td>
                   <td>
-                    <span className={`category-tag tag-${tx.category.toLowerCase()}`}>
-                      {tx.category}
-                    </span>
+                    {onUpdateCategory ? (
+                      <div className={`category-tag tag-${getCategoryClass(tx.category)} category-select-wrapper`}>
+                        <select
+                          value={tx.category || 'Uncategorized'}
+                          onChange={(e) => onUpdateCategory(tx.id, e.target.value)}
+                          className="category-select"
+                        >
+                          {ALLOWED_CATEGORIES.map(cat => (
+                            <option key={cat} value={cat}>{cat}</option>
+                          ))}
+                        </select>
+                      </div>
+                    ) : (
+                      <span className={`category-tag tag-${getCategoryClass(tx.category)}`}>
+                        {tx.category}
+                      </span>
+                    )}
                   </td>
                   <td className={`text-right font-mono ${tx.type === 'credit' ? 'text-income' : 'text-expense'}`}>
                     {tx.type === 'credit' ? '+' : '-'} ₹{tx.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}

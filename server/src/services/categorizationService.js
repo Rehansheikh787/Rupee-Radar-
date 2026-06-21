@@ -33,7 +33,7 @@ async function callGroqCategorization(batch) {
   const prompt = `
     You are a financial analyst. Categorize the following transactions from an Indian bank statement.
     Select EXACTLY ONE category for each transaction from the list below:
-    [Food, Travel, Shopping, Bills, EMI, Subscriptions, Salary, Rent, Investments, Other]
+    [Groceries, Food & Dining, Transportation, Utilities & Bills, Shopping, Entertainment & Leisure, Housing & Rent, Health & Medical, Transfer / Credit Card Payment, Salary, Investments, EMI, Uncategorized]
 
     Transactions:
     ${JSON.stringify(promptData, null, 2)}
@@ -42,8 +42,8 @@ async function callGroqCategorization(batch) {
     Do not add markdown formatting or explanation outside the JSON array.
     Example:
     [
-      {"id": "txn_3", "category": "Food"},
-      {"id": "txn_5", "category": "Bills"}
+      {"id": "txn_3", "category": "Food & Dining"},
+      {"id": "txn_5", "category": "Utilities & Bills"}
     ]
   `;
 
@@ -123,9 +123,9 @@ export async function categorizeTransactions(transactions) {
   const geminiModel = getGeminiModel();
 
   if (!hasGroq && !geminiModel) {
-    console.warn('⚠️ No AI API keys set. Falling back to "Other" for uncategorized transactions.');
+    console.warn('⚠️ No AI API keys set. Falling back to "Uncategorized" for uncategorized transactions.');
     uncategorizedItems.forEach(tx => {
-      categorized.push({ ...tx, category: 'Other' });
+      categorized.push({ ...tx, category: 'Uncategorized' });
     });
     return categorized;
   }
@@ -155,7 +155,7 @@ export async function categorizeTransactions(transactions) {
         const prompt = `
           You are a financial analyst. Categorize the following transactions from an Indian bank statement.
           Select EXACTLY ONE category for each transaction from the list below:
-          [Food, Travel, Shopping, Bills, EMI, Subscriptions, Salary, Rent, Investments, Other]
+          [Groceries, Food & Dining, Transportation, Utilities & Bills, Shopping, Entertainment & Leisure, Housing & Rent, Health & Medical, Transfer / Credit Card Payment, Salary, Investments, EMI, Uncategorized]
 
           Transactions:
           ${JSON.stringify(promptData, null, 2)}
@@ -182,14 +182,14 @@ export async function categorizeTransactions(transactions) {
       const aiCategory = aiCategorizedResults[tx.id];
       categorized.push({
         ...tx,
-        category: aiCategory || 'Other'
+        category: aiCategory || 'Uncategorized'
       });
     });
 
   } catch (error) {
     console.error('❌ Error during AI transaction categorization:', error.message);
     uncategorizedItems.forEach(tx => {
-      categorized.push({ ...tx, category: 'Other' });
+      categorized.push({ ...tx, category: 'Uncategorized' });
     });
   }
 

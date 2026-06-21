@@ -38,6 +38,75 @@ function App() {
     setPage('home');
   };
 
+  // Manually update transaction category from frontend and re-calculate all metrics dynamically
+  const handleUpdateTransactionCategory = (transactionId, newCategory) => {
+    if (!analysisData) return;
+
+    // 1. Map over transactions to update the targeted one
+    const updatedTransactions = analysisData.transactions.map(t => {
+      if (t.id === transactionId) {
+        return { ...t, category: newCategory };
+      }
+      return t;
+    });
+
+    // 2. Re-calculate summary metrics and category breakdown dynamically based on the updated transactions
+    let totalIncome = 0;
+    let totalSpend = 0;
+    const categoryTotals = {};
+
+    updatedTransactions.forEach(t => {
+      const amount = parseFloat(t.amount) || 0;
+      if (t.type === 'credit') {
+        totalIncome += amount;
+      } else if (t.type === 'debit') {
+        totalSpend += amount;
+        
+        // Accumulate spend by category
+        const cat = t.category || 'Uncategorized';
+        categoryTotals[cat] = (categoryTotals[cat] || 0) + amount;
+      }
+    });
+
+    const netSavings = totalIncome - totalSpend;
+    const savingsRate = totalIncome > 0 ? parseFloat(((netSavings / totalIncome) * 100).toFixed(1)) : 0;
+
+    // Re-construct the categoryBreakdown array
+    const categoryBreakdown = Object.keys(categoryTotals).map(cat => {
+      const amount = categoryTotals[cat];
+      const percentage = totalSpend > 0 ? parseFloat(((amount / totalSpend) * 100).toFixed(1)) : 0;
+      return {
+        category: cat,
+        totalAmount: amount,
+        percentage,
+        transactionCount: updatedTransactions.filter(t => t.type === 'debit' && t.category === cat).length
+      };
+    }).sort((a, b) => b.totalAmount - a.totalAmount); // Sort by highest spend first
+
+    // Update topTransactions as well if the edited transaction was in topTransactions
+    const updatedTopTransactions = analysisData.topTransactions.map(t => {
+      if (t.id === transactionId) {
+        return { ...t, category: newCategory };
+      }
+      return t;
+    });
+
+    // 3. Set the updated state
+    setAnalysisData({
+      ...analysisData,
+      summary: {
+        ...analysisData.summary,
+        totalIncome,
+        totalSpend,
+        netSavings,
+        savingsRate
+      },
+      categoryBreakdown,
+      topTransactions: updatedTopTransactions,
+      transactions: updatedTransactions
+    });
+  };
+
   // Mock upload simulator for Phase 5 (until FileUpload is fully integrated in Phase 6)
   const handleSimulateData = () => {
     const mockData = {
@@ -51,13 +120,13 @@ function App() {
         avgDailySpend: 913.50
       },
       categoryBreakdown: [
-        { category: 'Subscriptions', totalAmount: 1298.00, percentage: 4.7, transactionCount: 2 },
-        { category: 'Bills', totalAmount: 1299.00, percentage: 4.7, transactionCount: 1 },
-        { category: 'Food', totalAmount: 457.00, percentage: 1.7, transactionCount: 1 },
-        { category: 'Other', totalAmount: 25000.00, percentage: 91.2, transactionCount: 1 }
+        { category: 'Entertainment & Leisure', totalAmount: 1298.00, percentage: 4.7, transactionCount: 2 },
+        { category: 'Utilities & Bills', totalAmount: 1299.00, percentage: 4.7, transactionCount: 1 },
+        { category: 'Food & Dining', totalAmount: 457.00, percentage: 1.7, transactionCount: 1 },
+        { category: 'Uncategorized', totalAmount: 25000.00, percentage: 91.2, transactionCount: 1 }
       ],
       topTransactions: [
-        { id: 'txn_5', date: '2026-05-20', description: 'TRANSFER TO SELF', amount: 25000, category: 'Other' }
+        { id: 'txn_5', date: '2026-05-20', description: 'TRANSFER TO SELF', amount: 25000, category: 'Uncategorized' }
       ],
       recurringPayments: [
         {
@@ -66,7 +135,7 @@ function App() {
           amount: 649.00,
           isSameAmount: true,
           frequency: 'monthly',
-          category: 'Subscriptions',
+          category: 'Entertainment & Leisure',
           occurrences: 2,
           lastDate: '2026-05-28'
         }
@@ -82,8 +151,8 @@ function App() {
         {
           id: 2,
           emoji: '📊',
-          title: 'Top Category: Other',
-          text: 'Your biggest expense category is Other, consuming ₹25,000 (91.2% of your total spends).',
+          title: 'Top Category: Uncategorized',
+          text: 'Your biggest expense category is Uncategorized, consuming ₹25,000 (91.2% of your total spends).',
           type: 'info'
         },
         {
@@ -95,13 +164,13 @@ function App() {
         }
       ],
       transactions: [
-        { id: 'txn_1', date: '2026-04-28', description: 'NETFLIX SUBSCRIPTION', rawDescription: 'NETFLIX SUBSCRIPTION', amount: 649.00, type: 'debit', category: 'Subscriptions' },
-        { id: 'txn_2', date: '2026-05-15', description: 'UPI-SWIGGY-435267890', rawDescription: 'UPI-SWIGGY-435267890', amount: 457.00, type: 'debit', category: 'Food' },
+        { id: 'txn_1', date: '2026-04-28', description: 'NETFLIX SUBSCRIPTION', rawDescription: 'NETFLIX SUBSCRIPTION', amount: 649.00, type: 'debit', category: 'Entertainment & Leisure' },
+        { id: 'txn_2', date: '2026-05-15', description: 'UPI-SWIGGY-435267890', rawDescription: 'UPI-SWIGGY-435267890', amount: 457.00, type: 'debit', category: 'Food & Dining' },
         { id: 'txn_3', date: '2026-05-16', description: 'SALARY CREDIT', rawDescription: 'SALARY CREDIT', amount: 85000.00, type: 'credit', category: 'Salary' },
-        { id: 'txn_4', date: '2026-05-18', description: 'INTERNET BILL PAY', rawDescription: 'INTERNET BILL PAY', amount: 1299.00, type: 'debit', category: 'Bills' },
-        { id: 'txn_5', date: '2026-05-20', description: 'TRANSFER TO SELF', rawDescription: 'TRANSFER TO SELF', amount: 25000.00, type: 'debit', category: 'Other' },
-        { id: 'txn_6', date: '2026-05-25', description: 'REFUND SWIGGY', rawDescription: 'REFUND SWIGGY', amount: 457.00, type: 'credit', category: 'Food' },
-        { id: 'txn_7', date: '2026-05-28', description: 'NETFLIX SUBSCRIPTION', rawDescription: 'NETFLIX SUBSCRIPTION', amount: 649.00, type: 'debit', category: 'Subscriptions' }
+        { id: 'txn_4', date: '2026-05-18', description: 'INTERNET BILL PAY', rawDescription: 'INTERNET BILL PAY', amount: 1299.00, type: 'debit', category: 'Utilities & Bills' },
+        { id: 'txn_5', date: '2026-05-20', description: 'TRANSFER TO SELF', rawDescription: 'TRANSFER TO SELF', amount: 25000.00, type: 'debit', category: 'Uncategorized' },
+        { id: 'txn_6', date: '2026-05-25', description: 'REFUND SWIGGY', rawDescription: 'REFUND SWIGGY', amount: 457.00, type: 'credit', category: 'Food & Dining' },
+        { id: 'txn_7', date: '2026-05-28', description: 'NETFLIX SUBSCRIPTION', rawDescription: 'NETFLIX SUBSCRIPTION', amount: 649.00, type: 'debit', category: 'Entertainment & Leisure' }
       ]
     };
 
@@ -158,6 +227,7 @@ function App() {
             theme={theme}
             onReset={handleReset} 
             onNavigateToReport={() => setPage('report')}
+            onUpdateCategory={handleUpdateTransactionCategory}
           />
         )}
 

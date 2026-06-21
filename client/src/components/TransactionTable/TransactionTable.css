@@ -185,3 +185,64 @@
   color: var(--color-text);
   font-weight: 600;
 }
+
+/* Category Manual Selector Dropdown */
+.category-select-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 16px 0 0 !important; /* overrides padding from .category-tag to make space for arrow */
+  cursor: pointer;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.category-select-wrapper:hover {
+  border-color: currentColor !important;
+  box-shadow: 0 0 8px rgba(130, 87, 230, 0.15);
+}
+
+.category-select-wrapper::after {
+  content: "▼";
+  font-size: 7px;
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0.85;
+  color: inherit;
+}
+
+.category-select {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: inherit;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 3px 6px 3px 8px;
+  margin: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-transform: capitalize;
+  width: 100%;
+}
+
+.category-select option {
+  background-color: #14122b; /* Match var(--color-surface) dark theme fallback */
+  color: #F1F0FA; /* Match var(--color-text) fallback */
+  text-transform: capitalize;
+  font-size: 0.85rem;
+  padding: 4px;
+}
+
+/* Light theme overrides for options dropdown background */
+[data-theme="light"] .category-select option {
+  background-color: #FFFFFF;
+  color: #1F2623;
+}
