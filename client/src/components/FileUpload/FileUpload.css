@@ -1,0 +1,169 @@
+.file-upload-container {
+  width: 100%;
+}
+
+.upload-form {
+  width: 100%;
+  min-height: 250px;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: border-color var(--transition-normal), background-color var(--transition-normal);
+  background: var(--color-surface);
+}
+
+.upload-form.drag-active {
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 6%, transparent);
+}
+
+.file-input-hidden {
+  display: none;
+}
+
+.upload-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xl);
+  cursor: pointer;
+  width: 100%;
+}
+
+.upload-icon-wrapper {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-xs);
+  transition: transform var(--transition-fast);
+}
+
+.upload-view:hover .upload-icon-wrapper {
+  transform: translateY(-4px);
+}
+
+.upload-prompt {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.upload-or {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.btn-browse {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  padding: 8px 20px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.upload-view:hover .btn-browse {
+  background: var(--color-surface-hover);
+  border-color: var(--color-primary-light);
+}
+
+.upload-limits {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: var(--spacing-xs);
+}
+
+/* Progress State View */
+.progress-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-xl);
+  width: 80%;
+}
+
+.spinner-loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--color-border);
+  border-top-color: var(--color-primary-light);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.status-label {
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--color-text);
+}
+
+.progress-bar-track {
+  width: 100%;
+  height: 6px;
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary-light), var(--color-primary));
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease-out;
+}
+
+.progress-percent {
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  color: var(--color-text-muted);
+}
+
+/* Error State View */
+.error-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xl);
+  max-width: 80%;
+}
+
+.error-icon-wrapper {
+  font-size: 2.5rem;
+  color: var(--color-expense);
+}
+
+.error-view h4 {
+  font-size: 1.15rem;
+  color: var(--color-text);
+}
+
+.error-message {
+  color: var(--color-expense);
+  font-size: 0.9rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.btn-retry {
+  background: color-mix(in srgb, var(--color-expense) 10%, transparent);
+  color: var(--color-expense);
+  border: 1px solid color-mix(in srgb, var(--color-expense) 30%, transparent);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  transition: background var(--transition-fast);
+}
+
+.btn-retry:hover {
+  background: color-mix(in srgb, var(--color-expense) 20%, transparent);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
